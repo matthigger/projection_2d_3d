@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projections, visually &mdash; onto a line and onto a plane</title>
+  <meta name="description" content="Interactive 2D and 3D demos of vector
+    projection, the geometry behind least squares.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 26 L28 14' stroke='%231d4ed8' stroke-width='3'/%3E%3Cpath d='M4 26 L14 5' stroke='%2315803d' stroke-width='3'/%3E%3Cpath d='M14 5 L19 19' stroke='%23dc2626' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Projections, visually</h1>
+    <p class="sub">Find the closest point to <b class="vb">b</b> in a line or
+      a plane. This is the geometry behind least squares.</p>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-2d" data-panel="2d">
+        2D &middot; onto a line</button>
+      <button class="tab" role="tab" id="tab-3d" data-panel="3d">
+        3D &middot; onto a plane</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ================================================================ 2D -->
+    <section class="panel" id="panel-2d" role="tabpanel"
+      aria-labelledby="tab-2d">
+      <div class="stage card">
+        <svg id="svg2d" aria-label="2D projection of b onto a"></svg>
+        <div class="hint">Drag the tips of <b class="va">a</b> and
+          <b class="vb">b</b></div>
+      </div>
+
+      <aside class="side">
+        <div class="card">
+          <h2>Projecting onto a line</h2>
+          <p>All multiples <i>c</i><b class="va">a</b> form a line, the
+            <em>span</em> of <b class="va">a</b>. The projection
+            <b class="vp">p</b> is the point on that line closest to
+            <b class="vb">b</b>.</p>
+          <p>At the closest point, the error <b class="ve">e</b> =
+            <b class="vb">b</b> &minus; <b class="vp">p</b> meets the line at a
+            right angle:</p>
+          <div class="formula">
+            <b class="va">a</b> &middot; (<b class="vb">b</b> &minus;
+            <i>c</i><b class="va">a</b>) = 0
+            <span class="implies">&rArr;</span>
+            <i>c</i> = <span class="frac"><span><b class="va">a</b>&middot;<b
+              class="vb">b</b></span><span><b class="va">a</b>&middot;<b
+              class="va">a</b></span></span>,
+            &ensp; <b class="vp">p</b> = <i>c</i><b class="va">a</b>
+          </div>
+          <h3>Try this</h3>
+          <ul class="try">
+            <li>Drag <b class="vb">b</b> onto the dashed line:
+              <b class="ve">e</b> shrinks to zero and <b class="vp">p</b> =
+              <b class="vb">b</b>.</li>
+            <li>Make <b class="vb">b</b> perpendicular to <b class="va">a</b>:
+              the projection is <b>0</b>.</li>
+            <li>Stretch or flip <b class="va">a</b> without changing its line:
+              <b class="vp">p</b> stays put and only <i>c</i> changes. The
+              projection depends on the span, not on <b class="va">a</b>
+              itself.</li>
+          </ul>
+          <p class="ols"><b>Least squares:</b> with one feature and no
+            intercept, <b class="va">a</b> is the feature column
+            <b>x</b>, <b class="vb">b</b> is the target <b>y</b>, and
+            <i>c</i> = <b>x</b>&middot;<b>y</b> / <b>x</b>&middot;<b>x</b> is
+            the fitted slope <i>&beta;&#770;</i>.</p>
+        </div>
+
+        <div class="card readout" id="readout2d"></div>
+
+        <div class="card controls">
+          <label><input type="checkbox" id="snap2d" checked><span>Snap to
+            grid</span></label>
+          <label><input type="checkbox" id="span2d" checked><span>Show span of
+            <b class="va">a</b></span></label>
+          <label><input type="checkbox" id="vals2d" checked><span>Values on
+            vectors</span></label>
+          <div class="buttons"><button id="reset2d">Reset</button></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ================================================================ 3D -->
+    <section class="panel" id="panel-3d" role="tabpanel"
+      aria-labelledby="tab-3d" hidden>
+      <div class="stage card">
+        <svg id="svg3d" aria-label="3D projection of b onto a plane"></svg>
+        <div class="hint">Drag to rotate &middot; drag a tip to move a
+          vector &middot; scroll to zoom</div>
+      </div>
+
+      <aside class="side">
+        <div class="card">
+          <h2>Projecting onto a plane</h2>
+          <p><b class="va1">a&#8321;</b> and <b class="va2">a&#8322;</b> span a
+            plane. Put them side by side as the columns of
+            A = [<b class="va1">a&#8321;</b> <b class="va2">a&#8322;</b>].
+            Every point in the plane is then A<i>c</i> =
+            <i>c</i>&#8321;<b class="va1">a&#8321;</b> +
+            <i>c</i>&#8322;<b class="va2">a&#8322;</b>.</p>
+          <p>The closest point <b class="vp">p</b> = A<i>c</i> leaves an
+            error <b class="ve">e</b> = <b class="vb">b</b> &minus;
+            <b class="vp">p</b> perpendicular to the whole plane, so to
+            both <b class="va1">a&#8321;</b> and
+            <b class="va2">a&#8322;</b>:</p>
+          <div class="formula">
+            A<sup>T</sup>(<b class="vb">b</b> &minus; A<i>c</i>) = 0
+            <span class="implies">&rArr;</span>
+            A<sup>T</sup>A <i>c</i> = A<sup>T</sup><b class="vb">b</b>
+          </div>
+          <p>These are the <b>normal equations</b>. Solving them gives
+            <i>c</i> = (A<sup>T</sup>A)<sup>&minus;1</sup>A<sup>T</sup><b
+            class="vb">b</b>.</p>
+          <h3>Try this</h3>
+          <ul class="try">
+            <li>Click <em>Edge-on</em> to look along the plane: the right
+              angle between <b class="ve">e</b> and the plane is plain to
+              see.</li>
+            <li>Drag the tip of <b class="vb">b</b> into the plane:
+              <b class="ve">e</b> vanishes.</li>
+            <li>Click <em>a&#8322; &larr; a&#8321; + a&#8322;</em>. The plane
+              is the same, so <b class="vp">p</b> doesn't move, but
+              <i>c</i>&#8321; and <i>c</i>&#8322; change.</li>
+          </ul>
+          <p class="ols"><b>Least squares:</b> A is the design matrix
+            <b>X</b> (one column per feature), <b class="vb">b</b> is
+            <b>y</b>, <i>c</i> is <i>&beta;&#770;</i>, <b class="vp">p</b> is
+            the fit <b>&ycirc;</b>, and <b class="ve">e</b> is the residual.
+            With <i>n</i> samples the same picture lives in
+            &#8477;<sup><i>n</i></sup>; here <i>n</i> = 3, so we can look at
+            it.</p>
+        </div>
+
+        <div class="card readout" id="readout3d"></div>
+
+        <div class="card controls">
+          <div class="vec-inputs" id="inputs3d"></div>
+          <div class="buttons">
+            <button id="reset3d">Reset</button>
+            <button id="random3d">Random</button>
+            <button id="combo3d">a&#8322; &larr; a&#8321; + a&#8322;</button>
+          </div>
+          <div class="buttons">
+            <button id="edge3d">Edge-on view</button>
+            <button id="face3d">Face-on view</button>
+          </div>
+          <label><input type="checkbox" id="coef3d" checked><span>Show
+            <i>c</i>&#8321;<b class="va1">a&#8321;</b> +
+            <i>c</i>&#8322;<b class="va2">a&#8322;</b></span></label>
+          <label><input type="checkbox" id="vals3d" checked><span>Values on
+            vectors</span></label>
+          <label><input type="checkbox" id="spin3d"><span>Auto-rotate</span></label>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/matthigger/projection_2d_3d">Source on
+      GitHub</a>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/proj2d.js"></script>
+  <script src="js/proj3d.js"></script>
+  <script>
+    // Tabs, mirrored in the URL hash so a lecture can link to #3d.
+    (function () {
+      const tabs = document.querySelectorAll(".tab");
+      function show(name) {
+        for (const t of tabs) {
+          const on = t.dataset.panel === name;
+          t.setAttribute("aria-selected", on);
+          document.getElementById("panel-" + t.dataset.panel).hidden = !on;
+        }
+      }
+      for (const t of tabs) {
+        t.addEventListener("click", () => {
+          history.replaceState(null, "", "#" + t.dataset.panel);
+          show(t.dataset.panel);
+        });
+      }
+      show(location.hash === "#3d" ? "3d" : "2d");
+    })();
+  </script>
+</body>
+</html>
