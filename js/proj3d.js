@@ -16,6 +16,7 @@
   const DEFAULT_CAM = { theta: 0.8, phi: 0.45, zoom: 1 };
   const KEYS = ["a1", "a2", "b"];
   const NAMES = { a1: "a₁", a2: "a₂", b: "b" };
+  const AXES = ["x₀", "x₁", "x₂"];
 
   const svg = document.getElementById("svg3d");
   const readout = document.getElementById("readout3d");
@@ -110,7 +111,7 @@
 
     const O = P([0, 0, 0]);
     const AX = extent * 1.05;
-    ["x", "y", "z"].forEach((name, i) => {
+    AXES.forEach((name, i) => {
       for (const sgn of [1, -1]) {
         const q = [0, 0, 0];
         q[i] = sgn * AX;
@@ -270,13 +271,13 @@
   }
 
   function buildInputs() {
-    let html = `<span></span><span class="hd">x</span><span class="hd">y</span>
-      <span class="hd">z</span>`;
+    let html = "<span></span>" +
+      AXES.map((name) => `<span class="hd">${name}</span>`).join("");
     for (const k of KEYS) {
       html += chip(k, NAMES[k]);
       for (let i = 0; i < 3; i++) {
         html += `<input type="number" step="0.5" data-k="${k}" data-i="${i}"
-          aria-label="${NAMES[k]} ${"xyz"[i]}">`;
+          aria-label="${NAMES[k]} ${AXES[i]}">`;
       }
     }
     inputsEl.innerHTML = html;
