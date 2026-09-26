@@ -9,7 +9,7 @@ squares. Two tabs:
   it via the normal equations `AᵀA c = Aᵀb`. Drag to rotate, drag a tip to
   move a vector, scroll to zoom. Edge-on / face-on buttons animate the camera.
 
-Each vector keeps a fixed colour (a blue, a₂ violet, b green, p orange,
+Each vector keeps a fixed colour (the a vectors blue, b green, p orange,
 e red), and its name and value are drawn on the arrow itself. A legend in
 the corner of each plot says what each vector is, with its least-squares
 reading in parentheses (b the target y, a the feature columns, p the fit ŷ,
