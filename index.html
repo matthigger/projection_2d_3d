@@ -28,6 +28,16 @@
       aria-labelledby="tab-2d">
       <div class="stage card">
         <svg id="svg2d" aria-label="2D projection of b onto a"></svg>
+        <div class="legend" id="legend2d">
+          <div><span class="chip b">b</span><span>given vector
+            <span class="reg">(target <i>y</i>)</span></span></div>
+          <div><span class="chip a">a</span><span>spans a line
+            <span class="reg">(feature column <i>x</i>)</span></span></div>
+          <div><span class="chip p">p</span><span>projection: the part of <b class="vb">b</b>
+            in span(<b class="va">a</b>) <span class="reg">(fit <i>&ycirc;</i>)</span></span></div>
+          <div><span class="chip e">e</span><span>error: the part of <b class="vb">b</b> not in
+            span(<b class="va">a</b>) <span class="reg">(residual)</span></span></div>
+        </div>
         <div class="hint">Drag the tips of <b class="va">a</b> and
           <b class="vb">b</b></div>
       </div>
@@ -79,6 +89,8 @@
             <b class="va">a</b></span></label>
           <label><input type="checkbox" id="vals2d" checked><span>Values on
             vectors</span></label>
+          <label><input type="checkbox" id="legendopt2d" checked><span>Show
+            legend</span></label>
           <div class="buttons"><button id="reset2d">Reset</button></div>
         </div>
       </aside>
@@ -89,6 +101,18 @@
       aria-labelledby="tab-3d" hidden>
       <div class="stage card">
         <svg id="svg3d" aria-label="3D projection of b onto a plane"></svg>
+        <div class="legend" id="legend3d">
+          <div><span class="chip b">b</span><span>given vector
+            <span class="reg">(target <i>y</i>)</span></span></div>
+          <div><span><span class="chip a1">a&#8321;</span> <span
+            class="chip a2">a&#8322;</span></span><span>span a plane
+            <span class="reg">(feature columns of <i>X</i>)</span></span></div>
+          <div><span class="chip p">p</span><span>projection: the part of <b class="vb">b</b>
+            in span(<b class="va1">a&#8321;</b>, <b class="va2">a&#8322;</b>) <span class="reg">(fit
+            <i>&ycirc;</i>)</span></span></div>
+          <div><span class="chip e">e</span><span>error: the part of <b class="vb">b</b> not in
+            span(<b class="va1">a&#8321;</b>, <b class="va2">a&#8322;</b>) <span class="reg">(residual)</span></span></div>
+        </div>
         <div class="hint">Drag to rotate &middot; drag a tip to move a
           vector &middot; scroll to zoom</div>
       </div>
@@ -153,6 +177,8 @@
             <i>c</i>&#8322;<b class="va2">a&#8322;</b></span></label>
           <label><input type="checkbox" id="vals3d" checked><span>Values on
             vectors</span></label>
+          <label><input type="checkbox" id="legendopt3d" checked><span>Show
+            legend</span></label>
           <label><input type="checkbox" id="spin3d"><span>Auto-rotate</span></label>
         </div>
       </aside>
@@ -185,6 +211,13 @@
         });
       }
       show(location.hash === "#3d" ? "3d" : "2d");
+
+      // Legend overlays can hide a vector tip, so let them be switched off.
+      for (const k of ["2d", "3d"]) {
+        const opt = document.getElementById("legendopt" + k);
+        const leg = document.getElementById("legend" + k);
+        opt.addEventListener("change", () => { leg.hidden = !opt.checked; });
+      }
     })();
   </script>
 </body>

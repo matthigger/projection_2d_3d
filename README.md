@@ -10,8 +10,11 @@ squares. Two tabs:
   move a vector, scroll to zoom. Edge-on / face-on buttons animate the camera.
 
 Each vector keeps a fixed colour (a blue, a₂ violet, b green, p orange,
-e red), and its name and value are drawn on the arrow itself. A side panel
-explains the idea and shows live numbers.
+e red), and its name and value are drawn on the arrow itself. A legend in
+the corner of each plot says what each vector is, with its least-squares
+reading in parentheses (b the target y, a the feature columns, p the fit ŷ,
+e the residual); a checkbox hides it. A side panel explains the idea and
+shows live numbers.
 
 Plain HTML/CSS/JS with SVG: no build step and no dependencies, so it also
 works offline.
