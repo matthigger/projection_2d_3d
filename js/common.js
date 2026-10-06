@@ -213,6 +213,19 @@
     return [ev.clientX - r.left, ev.clientY - r.top];
   }
 
+  // BUILD comes from js/version.js, which the Pages workflow stamps at deploy
+  const build = document.getElementById("build");
+  if (BUILD) {
+    const when = new Date(BUILD.time).toLocaleString("en-US",
+      { dateStyle: "medium", timeStyle: "short" });
+    const href = "https://github.com/matthigger/projection_2d_3d/commit/" +
+      BUILD.sha;
+    build.innerHTML =
+      `build <a href="${href}">${BUILD.sha.slice(0, 7)}</a>, ${when}`;
+  } else {
+    build.textContent = "local copy";
+  }
+
   window.Proj = {
     V, color, svgEl, fmt, fmtVec, chip, drawArrow, drawHalo, drawLabels,
     localPoint,

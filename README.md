@@ -33,11 +33,11 @@ Link straight to a tab with `index.html#2d` or `index.html#3d`.
 
 ```sh
 gh repo create matthigger/projection_2d_3d --public --source . --push
-gh api -X POST repos/matthigger/projection_2d_3d/pages \
-  -f 'source[branch]=main' -f 'source[path]=/'
+gh api -X POST repos/matthigger/projection_2d_3d/pages -f build_type=workflow
 ```
 
-The site then lives at <https://matthigger.github.io/projection_2d_3d/>.
+`.github/workflows/pages.yml` then deploys each push to main. The site lives
+at <https://matthigger.github.io/projection_2d_3d/>.
 
 ## Layout
 
@@ -45,6 +45,7 @@ The site then lives at <https://matthigger.github.io/projection_2d_3d/>.
 |------|------|
 | `index.html` | page, explanation text, tab switching |
 | `style.css` | layout and the vector colour palette (`--c-*`) |
+| `js/version.js` | footer build stamp; `.github/workflows/pages.yml` overwrites it with the commit and build time at deploy (`null` locally) |
 | `js/common.js` | vector math, arrows, overlap-avoiding on-arrow labels |
 | `js/proj2d.js` | 2D demo |
 | `js/proj3d.js` | 3D demo (orbit camera, layered drawing around the plane) |
